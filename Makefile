@@ -1,7 +1,7 @@
 all: main
 
-main.class: main.java
-	javac main.java
+main.class Prim.class: main.java Prim.java
+	javac main.java Prim.java
 
-main: main.class
+main: main.class Prim.class
 	java main

@@ -1,3 +1,9 @@
+/**
+ * Pete Chee Zachraias
+ * Algorithm's coding project: using Prim and Kruskal's algorithm for finding minimum ink usage
+ * for connecting all of the freckles at the back of Dick's back
+ */
+
 import java.util.*; //import all util method and class
 
 class main {
@@ -40,10 +46,26 @@ class main {
             yArray[i] = y; // storing random y to y[index] array
         }
 
+
+        //test to see the end result
         for (int i = 0; i < numFreckle; i++) {
             System.out.printf("(%.2f, %.2f)\n", xArray[i], yArray[i]);
-
         }
+        System.out.println("");
+
+        //---------------------Prim's Algorithm----------------------------
+
+        Prim prim = new  Prim();
+        prim.setArray_X(xArray);
+        double [] newArray = prim.getArray_X();
+        for (int i = 0; i < numFreckle; i++) {
+            System.out.printf("(%.2f, %.2f)\n", newArray[i], yArray[i]);
+        }
+
+        System.out.println("");
+
+        //---------------------Kruskal's Algorithm----------------------------
+
     }
 
     /**
