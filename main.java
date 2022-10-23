@@ -28,10 +28,15 @@ class main {
         }
         numFreckle = input.nextInt(); // take the input and store it inside numFreckles
 
-        double[] xArray = new double[numFreckle];// array that holds all x-axis value
-        double[] yArray = new double[numFreckle];// array that holds all y-axis value
+
+        double [] xArray = {1.0, 2.0, 2.0};
+        double [] yArray = {1.0, 2.0, 4.0};
+
+        //double[] xArray = new double[numFreckle];// array that holds all x-axis value
+        //double[] yArray = new double[numFreckle];// array that holds all y-axis value
 
         // generating different number of x and y. between 0 and 100 as the plane
+        /*
         for (int i = 0; i < numFreckle; i++) {
             x = (double)ran.nextInt(101) + ran.nextDouble();
             y = (double)ran.nextInt(101) + ran.nextDouble();
@@ -45,6 +50,7 @@ class main {
             xArray[i] = x; // storing random x to x[index] array
             yArray[i] = y; // storing random y to y[index] array
         }
+        */
 
 
         //test to see the end result
@@ -55,14 +61,11 @@ class main {
 
         //---------------------Prim's Algorithm----------------------------
 
-        Prim prim = new  Prim();
-        prim.setArray_X(xArray);
-        double [] newArray = prim.getArray_X();
-        for (int i = 0; i < numFreckle; i++) {
-            System.out.printf("(%.2f, %.2f)\n", newArray[i], yArray[i]);
-        }
-
-        System.out.println("");
+        Prim prim = new  Prim(); //create Prim object
+        double p = prim.prim(xArray, yArray);//using the data from xArray and yArray to find the minimum ink spent
+        
+        System.out.printf("%.2f\n", p);//format the display
+        System.out.println();//create space for formatting
 
         //---------------------Kruskal's Algorithm----------------------------
 
