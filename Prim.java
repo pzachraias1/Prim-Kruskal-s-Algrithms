@@ -8,10 +8,11 @@
  * usage.
  */
 
-import java.math.*;
+import java.math.*; //calling math class to use the 
+import java.util.*;
 
-class Prim {
-    double[] visited;//array to keep track of visited vector
+class Prim{
+    int[] visited;// array to keep track of visited vector
 
     /**
      * constructor for the Prim class
@@ -21,54 +22,61 @@ class Prim {
     }
 
     /**
-     * method that takes in all of the coordinate of the freckles and find the minimum ink spent.
+     * method that takes in all of the coordinate of the freckles and find the
+     * minimum ink spent.
      * using the prim algorithm to find the minimun cost for ink spent
+     * 
      * @param xA it is the X array of the freckles
      * @param yA it is the Y array of the freckles
      * @return a double that has the minimum ink spent.
      */
     public double prim(double[] xA, double[] yA) {
-        //value that is going to be the final value that is going to return. It is the 
-        //total addition of all minimun cost from one freckle to another
-        double result = 0.0;
 
-        double min = 0;//placeholder for the minimum.
-        double temp = 0.0;//placeholder for the difference between 2 coordinate.
-        int i = 0; //index on where is currently being visited.
-        int iHolder = 0; // placeholder for the potential index on to be visited.
-        int count = 0; // counting the number of vector to be visited.
-        visited = new double[xA.length];//set the lenght of visited array
+        double result = 0.0; //initialize the result
+        visited = new int[xA.length]; //set the lenght of visited and initialize it
+        Random ran = new Random();//create an object for random method. it is going to generate a random start point for the prim algorithms
 
-        while (count < xA.length) { //will be looping until all vector is visited.
-            //setting min to 0 to restart it. It is going to be restart to 0 as the next
-            //vector is new and will need new initial min.
-            min = 0;
-            for (int j = 0; j < xA.length; j++) {//looping all of the coordinate until all have been visited
-                //check if the current vector is not being taken different of it self
-                //and to check if this vector has been visited before
-                //if none of the 2 condition are true, then it will proceed and do the follow code block
-                if (!hasVisited(j, visited) && !checkArray(xA[i], yA[i], xA[j], yA[j])) {
-                    temp = distance(xA[i], yA[i], xA[j], yA[j]);//taking the differnt between 2 coordinate
-                    //base. if vector is new, it will let the new different be the new minimum
-                    if (min == 0) {
-                        min = temp;//minimum = different of the first 2 vector
-                        iHolder = j;//let index holder equal the current vector index.
-                    } else if (temp < min) {//if temp is greater than minimum
-                        min = temp;//let minimum = different or setting minimum its new value
-                        iHolder = j;//placehold for index
-                    }
-                }
+        double min =0, temp; //initialize minimum to store minimum value in it and declare temporary
+        int curr = ran.nextInt(xA.length);//randomly generate a vector to start with. Where in the given coordinate to start with
+        //it is going to take the index of the vector that has the closest distance to the current
+        //index. 
+        int minIndex = 0;
+        visited[0] = curr;//let the start index or vector be in the visited array. since we are starting with it, we are adding it to the visited array
+        
+        //it is going to loop starting from the next index in the visited array
+        for (int i = 1; i < visited.length; i++){
+            if (visited == null){//base case if visited array is nothing.
+                return result = 0.0;
             }
-            i = iHolder;//let index = its holder
-            visited[count] = i; // let the current index be in the visited array. this is the index of the new minimum cost vector. it is the vector that is closes to the previous vector
-            result += min;//accumlate the minimum to result
-            count++;//increment count
+            else { //if the visited array has value or initial vector in it already
+                //it is going to loop to until it reached the next index of the visited array.
+                for (int j = 0; j<i; j++){
+                    int currValue = visited[j]; // take a vector from the visited
+                    //it is going to loop around all of the vectors or coordinate
+                    for (int c = 0; c <xA.length;c++){
+                        //To check if the coordinate to be compare with is not the same thing
+                        // and check if the coordinate is already inside the visited array
+                        if (!hasVisited(c, i-1) && !checkArray(xA[currValue], yA[currValue], xA[c], yA[c])){
+                            temp = distance(xA[currValue], yA[currValue], xA[c], yA[c]);//taking the distance between coordinate
+                            if (min == 0 || min > temp){//if minimum is bigger or if minimum is 0
+                                min = temp;//let minimum = temp or the distance
+                                minIndex = c;//take the vector of the smaller route to from the current vectors
+                            }
+                        }
+                    }
+                    
+                }
+                result += min;//accumlate the result with all of the minimum route
+                min= 0;//reinitialize minimum since we have already got the minimum. now we start over to find the next minimum cost of ink
+                visited [i] = minIndex;//the minimum index will be in the visited array
+            }
         }
-        return result;//return accumlate minimum
+        return result;// return accumlate minimum
     }
 
     /**
      * to find the distance between 2 vectors
+     * 
      * @param x1 x of the first coordinate
      * @param y1 y of the first coordinate
      * @param x2 x of the second coordinate
@@ -76,13 +84,13 @@ class Prim {
      * @return the distance between 2 coordinate
      */
     public double distance(double x1, double y1, double x2, double y2) {
-        double result = 0.0;//initialize result
+        double result = 0.0;// initialize result
 
-        double difX = x2 - x1; //taking the different of x1 and x2
-        double difY = y2 - y1; //taking the differn tof y1 and y2
-        double sqrX = Math.pow(difX, 2); //taking the square of x2-x1
-        double sqrY = Math.pow(difY, 2); //taking the square of y2-y1
-        double com = sqrX + sqrY; //adding the square of x and square of y
+        double difX = x2 - x1; // taking the different of x1 and x2
+        double difY = y2 - y1; // taking the differn tof y1 and y2
+        double sqrX = Math.pow(difX, 2); // taking the square of x2-x1
+        double sqrY = Math.pow(difY, 2); // taking the square of y2-y1
+        double com = sqrX + sqrY; // adding the square of x and square of y
         double sqrt = Math.sqrt(com); // taking the square root of com
         result = sqrt; // move sqrt to result for it to be return.
 
@@ -90,18 +98,21 @@ class Prim {
     }
 
     /**
-     * checking if the current vector is the same as the vector that is being compare to
+     * checking if the current vector is the same as the vector that is being
+     * compare to
+     * 
      * @param xi x of the index i
      * @param yi y of the index i
      * @param xj x of teh index j
      * @param yj y of the index i
-     * @return return true if the vector that is being compare is the same as the current vector.
-     * return false if the 2 vector are different
+     * @return return true if the vector that is being compare is the same as the
+     *         current vector.
+     *         return false if the 2 vector are different
      */
     public boolean checkArray(double xi, double yi, double xj, double yj) {
         boolean result = false;
 
-        //checking if the 2 vector are the same or not
+        // checking if the 2 vector are the same or not
         if (xi == xj && yi == yj) {
             result = true;
         }
@@ -111,16 +122,17 @@ class Prim {
 
     /**
      * checking if the current vector has been visited
-     * @param num current vector
+     * 
+     * @param num   current vector
      * @param visit array of the vector that has been visited
      * @return return true if the vector has been visite before or not.
      */
-    public boolean hasVisited(double num, double[] visit) {
+    public boolean hasVisited(double num, int index) {
         boolean result = false;
 
-        //check if the vector has been visited or not.
-        for (int i = 0; i < visit.length; i++) {
-            if (visit[i] == num)
+        // check if the vector has been visited or not.
+        for (int i = index; i >= 0; i--) {
+            if (visited[i] == num)
                 result = true;
         }
 
