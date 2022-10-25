@@ -30,8 +30,8 @@ class main {
         }
         numFreckle = input.nextInt(); // take the input and store it inside numFreckles
 
-        double[] xArray = { 1.0, 2.0, 2.0, 0.0};
-        double[] yArray = { 1.0, 2.0, 4.0, 0.0};
+        double[] xArray = { 1.0, 2.0, 2.0, 0.0 };
+        double[] yArray = { 1.0, 2.0, 4.0, 0.0 };
 
         // double[] xArray = new double[numFreckle];// array that holds all x-axis value
         // double[] yArray = new double[numFreckle];// array that holds all y-axis value
@@ -53,7 +53,7 @@ class main {
          * }
          */
 
-         System.out.println();
+        System.out.println();
         // test to see the end result
         for (int i = 0; i < numFreckle; i++) {
             System.out.printf("(%.2f, %.2f)\n", xArray[i], yArray[i]);
@@ -64,13 +64,17 @@ class main {
 
         Prim prim = new Prim(); // create Prim object
 
-        for (int i = 0; i<numTest; i++){
+        for (int i = 0; i < numTest; i++) {
             double p = prim.prim(xArray, yArray);// using the data from xArray and yArray to find the minimum ink spent
             System.out.printf("%.2f\n", p);// format the display
         }
         System.out.println();// create space for formatting
 
         // ---------------------Kruskal's Algorithm----------------------------
+
+        Kruskal krus = new Kruskal();
+        double k = krus.kruskal(xArray, yArray);
+        System.out.printf("%.2f\n", k);// format the display
 
     }
 

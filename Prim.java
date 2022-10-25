@@ -11,7 +11,7 @@
 import java.math.*; //calling math class to use the 
 import java.util.*;
 
-class Prim{
+class Prim {
     int[] visited;// array to keep track of visited vector
 
     /**
@@ -32,43 +32,48 @@ class Prim{
      */
     public double prim(double[] xA, double[] yA) {
 
-        double result = 0.0; //initialize the result
-        visited = new int[xA.length]; //set the lenght of visited and initialize it
-        Random ran = new Random();//create an object for random method. it is going to generate a random start point for the prim algorithms
+        double result = 0.0; // initialize the result
+        visited = new int[xA.length]; // set the lenght of visited and initialize it
+        Random ran = new Random();// create an object for random method. it is going to generate a random start
+                                  // point for the prim algorithms
 
-        double min =0, temp; //initialize minimum to store minimum value in it and declare temporary
-        int curr = ran.nextInt(xA.length);//randomly generate a vector to start with. Where in the given coordinate to start with
-        //it is going to take the index of the vector that has the closest distance to the current
-        //index. 
+        double min = 0, temp; // initialize minimum to store minimum value in it and declare temporary
+        int curr = ran.nextInt(xA.length);// randomly generate a vector to start with. Where in the given coordinate to
+                                          // start with
+        // it is going to take the index of the vector that has the closest distance to
+        // the current
+        // index.
         int minIndex = 0;
-        visited[0] = curr;//let the start index or vector be in the visited array. since we are starting with it, we are adding it to the visited array
-        
-        //it is going to loop starting from the next index in the visited array
-        for (int i = 1; i < visited.length; i++){
-            if (visited == null){//base case if visited array is nothing.
+        visited[0] = curr;// let the start index or vector be in the visited array. since we are starting
+                          // with it, we are adding it to the visited array
+
+        // it is going to loop starting from the next index in the visited array
+        for (int i = 1; i < visited.length; i++) {
+            if (visited == null) {// base case if visited array is nothing.
                 return result = 0.0;
-            }
-            else { //if the visited array has value or initial vector in it already
-                //it is going to loop to until it reached the next index of the visited array.
-                for (int j = 0; j<i; j++){
+            } else { // if the visited array has value or initial vector in it already
+                     // it is going to loop to until it reached the next index of the visited array.
+                for (int j = 0; j < i; j++) {
                     int currValue = visited[j]; // take a vector from the visited
-                    //it is going to loop around all of the vectors or coordinate
-                    for (int c = 0; c <xA.length;c++){
-                        //To check if the coordinate to be compare with is not the same thing
+                    // it is going to loop around all of the vectors or coordinate
+                    for (int c = 0; c < xA.length; c++) {
+                        // To check if the coordinate to be compare with is not the same thing
                         // and check if the coordinate is already inside the visited array
-                        if (!hasVisited(c, i-1) && !checkArray(xA[currValue], yA[currValue], xA[c], yA[c])){
-                            temp = distance(xA[currValue], yA[currValue], xA[c], yA[c]);//taking the distance between coordinate
-                            if (min == 0 || min > temp){//if minimum is bigger or if minimum is 0
-                                min = temp;//let minimum = temp or the distance
-                                minIndex = c;//take the vector of the smaller route to from the current vectors
+                        if (!hasVisited(c, i - 1) && !checkArray(xA[currValue], yA[currValue], xA[c], yA[c])) {
+                            temp = distance(xA[currValue], yA[currValue], xA[c], yA[c]);// taking the distance between
+                                                                                        // coordinate
+                            if (min == 0 || min > temp) {// if minimum is bigger or if minimum is 0
+                                min = temp;// let minimum = temp or the distance
+                                minIndex = c;// take the vector of the smaller route to from the current vectors
                             }
                         }
                     }
-                    
+
                 }
-                result += min;//accumlate the result with all of the minimum route
-                min= 0;//reinitialize minimum since we have already got the minimum. now we start over to find the next minimum cost of ink
-                visited [i] = minIndex;//the minimum index will be in the visited array
+                result += min;// accumlate the result with all of the minimum route
+                min = 0;// reinitialize minimum since we have already got the minimum. now we start over
+                        // to find the next minimum cost of ink
+                visited[i] = minIndex;// the minimum index will be in the visited array
             }
         }
         return result;// return accumlate minimum
