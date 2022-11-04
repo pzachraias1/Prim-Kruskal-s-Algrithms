@@ -8,7 +8,7 @@
  * usage.
  */
 
-import java.math.*; //calling math class to use the 
+import java.math.*; //importing math class to use
 import java.util.*;
 
 class Prim {
@@ -76,6 +76,15 @@ class Prim {
                 visited[i] = minIndex;// the minimum index will be in the visited array
             }
         }
+        System.out.print("\n[");
+        for (int i = 0; i < xA.length; i++) {
+            if (i == xA.length - 1) {
+                System.out.print(visited[i]);
+            } else {
+                System.out.print(visited[i] + ", ");
+            }
+        }
+        System.out.println("]");
         return result;// return accumlate minimum
     }
 

@@ -33,35 +33,36 @@ class main {
         double[] xArray = { 1.0, 2.0, 2.0, 0.0 };
         double[] yArray = { 1.0, 2.0, 4.0, 0.0 };
 
-        // double[] xArray = new double[numFreckle];// array that holds all x-axis value
-        // double[] yArray = new double[numFreckle];// array that holds all y-axis value
+        //double[] xArray = new double[numFreckle];// array that holds all x-axis value
+        //double[] yArray = new double[numFreckle];// array that holds all y-axis value
 
         // generating different number of x and y. between 0 and 100 as the plane
-        /*
-         * for (int i = 0; i < numFreckle; i++) {
-         * x = (double)ran.nextInt(101) + ran.nextDouble();
-         * y = (double)ran.nextInt(101) + ran.nextDouble();
-         * 
-         * // loop around if there exist a coordinate in the array.
-         * while (checkArray(xArray, yArray, x, y)) {
-         * x = (double)ran.nextInt(101) + ran.nextDouble();
-         * y = (double)ran.nextInt(101) + ran.nextDouble();
-         * }
-         * 
-         * xArray[i] = x; // storing random x to x[index] array
-         * yArray[i] = y; // storing random y to y[index] array
-         * }
-         */
+        /* 
+        for (int i = 0; i < numFreckle; i++) {
+            x = (double) ran.nextInt(101) + ran.nextDouble();
+            y = (double) ran.nextInt(101) + ran.nextDouble();
+
+            // loop around if there exist a coordinate in the array.
+            while (checkArray(xArray, yArray, x, y)) {
+                x = (double) ran.nextInt(101) + ran.nextDouble();
+                y = (double) ran.nextInt(101) + ran.nextDouble();
+            }
+
+            xArray[i] = x; // storing random x to x[index] array
+            yArray[i] = y; // storing random y to y[index] array
+        }
+        */
 
         System.out.println();
         // test to see the end result
         for (int i = 0; i < numFreckle; i++) {
+            System.out.print(i + ". ");
             System.out.printf("(%.2f, %.2f)\n", xArray[i], yArray[i]);
         }
         System.out.println("");
 
         // ---------------------Prim's Algorithm----------------------------
-
+        System.out.println("-------------------------PRIM---------------------------");
         Prim prim = new Prim(); // create Prim object
 
         for (int i = 0; i < numTest; i++) {
@@ -71,10 +72,12 @@ class main {
         System.out.println();// create space for formatting
 
         // ---------------------Kruskal's Algorithm----------------------------
-
+        System.out.println("-------------------------Kruskal---------------------------");
         Kruskal krus = new Kruskal();
         double k = krus.kruskal(xArray, yArray);
         System.out.printf("%.2f\n", k);// format the display
+
+        input.close();
 
     }
 
@@ -130,7 +133,6 @@ class main {
                 num = Integer.parseInt(s);
             }
         }
-
         return num; // return the parse integer
     }
 

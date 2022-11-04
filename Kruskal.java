@@ -6,7 +6,11 @@
  */
 
  class Kruskal {
-    private int [] visited;
+    Graph s, d;
+    Vector [] visited;
+    Vector [] unvisited;
+    Edge [] minEdge;
+    Edge [] e;
 
     public Kruskal(){
 
@@ -24,31 +28,53 @@
     public double kruskal(double []xArray, double [] yArray){
         double result = 0.0;
 
-        result = 777;
+        visited = new Vector[xArray.length];
+        unvisited = new Vector[xArray.length];
+        minEdge = new Edge[xArray.length];
+        Edge [] tempEdge = new Edge[xArray.length];
+        e = new Edge[minEdge.length-1];
 
+        for (int i = 0; i<xArray.length; i++){
+            unvisited[i] = new Vector(xArray[i], yArray[i]);
+        }
+
+        for (int i = 0; i<unvisited.length; i++){
+            for (int j = 0; j<unvisited.length; j++){
+                if (i != j){
+                    tempEdge [i] = new Edge(unvisited[i], unvisited[j]);
+                    if (minEdge[i] == null){
+                        minEdge[i] = tempEdge[i];
+                    }
+                    if ((minEdge[i].getValue() > tempEdge[i].getValue())){
+                        minEdge[i] = tempEdge[i];
+                    }
+                }
+            }
+        }
+
+
+        
+
+        sortEdge(minEdge);
+        
+
+        for (int i = 0; i < minEdge.length; i++){
+            System.out.println(i + ". Sources = " + minEdge[i].getSource() + "\tDestination = " + 
+            minEdge[i].getDestination() + "\tDistance = " + minEdge[i].getValue());
+        }
+        
         return result;
     }
 
-    /**
-     * to find the distance between 2 vectors
-     * 
-     * @param x1 x of the first coordinate
-     * @param y1 y of the first coordinate
-     * @param x2 x of the second coordinate
-     * @param y2 y of the second coordinate
-     * @return the distance between 2 coordinate
-     */
-    public double distance(double x1, double y1, double x2, double y2) {
-        double result = 0.0;// initialize result
-
-        double difX = x2 - x1; // taking the different of x1 and x2
-        double difY = y2 - y1; // taking the differn tof y1 and y2
-        double sqrX = Math.pow(difX, 2); // taking the square of x2-x1
-        double sqrY = Math.pow(difY, 2); // taking the square of y2-y1
-        double com = sqrX + sqrY; // adding the square of x and square of y
-        double sqrt = Math.sqrt(com); // taking the square root of com
-        result = sqrt; // move sqrt to result for it to be return.
-
-        return result;
+    public void sortEdge (Edge [] e){
+        for (int i = 1; i<e.length; i++ ){
+            Edge next = e[i];
+            int j = i-1;
+            while (j>=0 && next.getValue() < e[j].getValue()){
+                e[j+1] = e[j];
+                j--;
+            }
+            e[j+1] = next;
+        }
     }
  }
