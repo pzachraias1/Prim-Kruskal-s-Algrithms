@@ -56,18 +56,20 @@ class Kruskal {
         }
 
         sortEdge(tempEdge);// sorting all of the edge from least to greatest distance
-        int nextVisited = 0;
+        int nextVisited = 0;//point to the next slot in the visite array
         count = 0;// reintialize count to keep track of temp edge element.
         int next = 0; // keeping track of the minEdge element. When is the next element and so on
         // loop through the tempEdge array.
         while (count < tempEdge.length) {
-            int caseVector = 0;
+            int caseVector = 0;//case 1: non of the source and destination is in the visited array
+                                //case 2: source vector is visited but destination is not
+                                //case 3: destination vector is visited but source is not
             if (minEdge[0] == null) {// if the minEdge first element is nothing. let it equal first element of temp
                 minEdge[0] = tempEdge[0];// letting first element of min equal temp first element
-                visited[nextVisited] = minEdge[0].s;
-                nextVisited++;
-                visited[nextVisited] = minEdge[0].d;
-                nextVisited++;
+                visited[nextVisited] = minEdge[0].s;//adding the source vector to the visited array
+                nextVisited++;//point to the next slot in visited array
+                visited[nextVisited] = minEdge[0].d;//add the destination vector to the visited array
+                nextVisited++;//point to the next slot in the visited array
                 next++;// set the next element to the next index
             } else {// if minEdge first element is not null
                 int dup = 0;// counting the number of duplicate
@@ -75,51 +77,54 @@ class Kruskal {
                     if (minEdge[i].equalEdge(tempEdge[count])) {// if there is a duplicate
                         dup++;// keep track that there is a duplicate
                     } else {
-                        int sourceCounter = 0;
-                        int desCounter = 0;
-                        for (int j = 0; j < nextVisited; j++) {
+                        int sourceCounter = 0;// 0 if source has not been visited. 1 if source was visited
+                        int desCounter = 0;// 0 if destination has not been visited. 1 if destination was visited
+                        for (int j = 0; j < nextVisited; j++) {//loop through the visited array.
+                            //check if tempEdge source has been visited
                             if (tempEdge[count].s.equals(visited[j])) {
-                                sourceCounter++;
+                                sourceCounter++;//increment if visited
                             }
+                            //check if tempEdge destination has been visited
                             if (tempEdge[count].d.equals(visited[j])) {
-                                desCounter++;
+                                desCounter++;//increment if visited
                             }
                         }
+                        //case 1 if both source and destination has not been visited
                         if (sourceCounter == 0 && desCounter == 0) {
                             caseVector = 1;
                         }
+                        //case 2 if sources is visited but destination is not
                         if (sourceCounter == 1 && desCounter == 0) {
                             caseVector = 2;
                         }
+                        //case 3 if destination is visited but source has not
                         if (sourceCounter == 0 && desCounter == 1) {
                             caseVector = 3;
                         }
                     }
                 }
                 if (dup == 0) {// if there is no duplicate, let minEdge index equal temp index
+                    //case 1 is going to run
                     if (caseVector == 1) {
-                        System.out.println("Case 1");
                         minEdge[next] = tempEdge[count];// letting element of min and temp equal
-                        visited[nextVisited] = minEdge[next].s;
-                        nextVisited++;
-                        visited[nextVisited] = minEdge[next].d;
-                        nextVisited++;
+                        visited[nextVisited] = minEdge[next].s;//adding minEdge source to visited array
+                        nextVisited++;//point to the next visited array slot
+                        visited[nextVisited] = minEdge[next].d;//adding minEdge destination to the visited array
+                        nextVisited++;//point to the next visited array slot
                         next++;// point to the next slot in min array to be fill in.
-
                     }
+                    //case 2 will run
                     if (caseVector == 2) {
-                        System.out.println("Case 2");
                         minEdge[next] = tempEdge[count];// letting element of min and temp equal
-                        visited[nextVisited] = minEdge[next].d;
-                        nextVisited++;
+                        visited[nextVisited] = minEdge[next].d;//adding the minEdge destination to the visited array
+                        nextVisited++;//point to the next slot in the visited array
                         next++;// point to the next slot in min array to be fill in.
-
                     }
+                    //case 3 will run
                     if (caseVector == 3) {
-                        System.out.println("Case 3");
                         minEdge[next] = tempEdge[count];// letting element of min and temp equal
-                        visited[nextVisited] = minEdge[next].s;
-                        nextVisited++;
+                        visited[nextVisited] = minEdge[next].s;//adding the minEdge source to the visited array
+                        nextVisited++;//point to the next slot in the visited array
                         next++;// point to the next slot in min array to be fill in.
                     }
                 }
