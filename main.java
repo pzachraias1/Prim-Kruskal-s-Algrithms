@@ -30,7 +30,7 @@ class main {
         }
         numFreckle = input.nextInt(); // take the input and store it inside numFreckles
 
-        double[] xArray = { 1.0, 2.0, 0.0, 2.0, 3.0 };
+        double[] xArray = { 1.0, 2.0, 0.0, 2.0, 7.0 };
         double[] yArray = { 1.0, 4.0, 0.0, 2.0, 3.0 };
 
         //double[] xArray = new double[numFreckle];// array that holds all x-axis value
