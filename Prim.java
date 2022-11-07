@@ -1,4 +1,3 @@
-
 /**
  * Pete Chee Zachraias
  * Algorithm's coding project: using Prim and Kruskal's algorithm for finding minimum ink usage
