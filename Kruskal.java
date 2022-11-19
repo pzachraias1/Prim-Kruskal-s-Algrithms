@@ -55,6 +55,7 @@ class Kruskal {
             }
         }
 
+        
         sortEdge(tempEdge);// sorting all of the edge from least to greatest distance
         int nextVisited = 0;//point to the next slot in the visite array
         count = 0;// reintialize count to keep track of temp edge element.
@@ -134,7 +135,10 @@ class Kruskal {
             }
             count++;// the next temp element to be compare with minEdge array
         }
-
+        for (int i = 0; i<visited.length; i++){
+            System.out.print("("+visited[i].x + ", "+ visited[i].y + "), ");
+        }
+        System.out.println();
         printEdge(minEdge);// printing the minEdge array. It is a void method
 
         // getting the accumlative of all minEdge distance
