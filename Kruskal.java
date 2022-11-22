@@ -135,9 +135,7 @@ class Kruskal {
             }
             count++;// the next temp element to be compare with minEdge array
         }
-        for (int i = 0; i<visited.length; i++){
-            System.out.print("("+visited[i].x + ", "+ visited[i].y + "), ");
-        }
+        
         System.out.println();
         printEdge(minEdge);// printing the minEdge array. It is a void method
 

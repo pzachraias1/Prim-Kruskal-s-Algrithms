@@ -22,6 +22,8 @@ class main {
         String s = "";
 
         // test to see the end result
+        System.out.println("-----------------------Test 1-------------------------");
+        System.out.println();
         for (int i = 0; i < xArray.length; i++) {
             System.out.print(i + ". ");
             System.out.printf("(%.2f, %.2f)\n", xArray[i], yArray[i]);
@@ -41,8 +43,8 @@ class main {
         double k = krus.kruskal(xArray, yArray);
         System.out.printf("Kruskal = %.2f\n", k);// format the display
 
-        // ----------------------------------Input
-        // option--------------------------------
+        System.out.println();
+        // ----------------------------------Input option--------------------------------
         // Random ran = new Random(); // random object that will generate random number
         // System.out.print("Please enter the number of test: "); // display a prompt
         // that is going to take the number of
@@ -85,12 +87,15 @@ class main {
         // option------------------------
 
         // ----------------------------------File reader------------------------------
+        int testCaseCounter = 1;
         try {
             reader = new BufferedReader(new FileReader("test_case.txt"));
             String line = reader.readLine();
+            testCaseCounter++;
             while (line != null) {
                 s = line;
                 if (s.length() == 0) {
+                    System.out.println("-----------------------Test " + testCaseCounter+"-------------------------");
                     System.out.println();
                     for (int i = 0; i < xArray.length; i++) {
                         System.out.print(i + ". ");
