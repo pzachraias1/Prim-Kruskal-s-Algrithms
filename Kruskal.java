@@ -1,3 +1,6 @@
+import java.util.LinkedList;
+import java.util.Queue;
+
 /**
  * Pete Chee Zachraias
  * 
@@ -11,7 +14,6 @@ class Kruskal {
                         // vectors
     Edge[] minEdge; // will be holding all of the minimum edges. All of the minimum edge with no
                     // duplicate
-    Vector[] visited;
 
     /**
      * Constructor for the Kruskal's Algorithm
@@ -32,7 +34,6 @@ class Kruskal {
     public double kruskal(double[] xArray, double[] yArray) {
         double result = 0.0; // will be the accumulated from all minimum edges
 
-        visited = new Vector[xArray.length];
         unvisited = new Vector[xArray.length];// initialize unvisited array vector
         minEdge = new Edge[xArray.length - 1]; // initialize minimum edge array. it is minus 1 because edge is 1 less
                                                // than vector
@@ -42,6 +43,7 @@ class Kruskal {
         // adding all of the vector into unisited vectors
         for (int i = 0; i < xArray.length; i++) {
             unvisited[i] = new Vector(xArray[i], yArray[i]);
+            unvisited[i].parent = unvisited[i];
         }
 
         int count = 0;// count the number of tempEdge.
@@ -55,96 +57,60 @@ class Kruskal {
             }
         }
 
-        
         sortEdge(tempEdge);// sorting all of the edge from least to greatest distance
-        int nextVisited = 0;//point to the next slot in the visite array
-        count = 0;// reintialize count to keep track of temp edge element.
-        int next = 0; // keeping track of the minEdge element. When is the next element and so on
-        // loop through the tempEdge array.
-        while (count < tempEdge.length) {
-            int caseVector = 0;//case 1: non of the source and destination is in the visited array
-                                //case 2: source vector is visited but destination is not
-                                //case 3: destination vector is visited but source is not
-            if (minEdge[0] == null) {// if the minEdge first element is nothing. let it equal first element of temp
-                minEdge[0] = tempEdge[0];// letting first element of min equal temp first element
-                visited[nextVisited] = minEdge[0].s;//adding the source vector to the visited array
-                nextVisited++;//point to the next slot in visited array
-                visited[nextVisited] = minEdge[0].d;//add the destination vector to the visited array
-                nextVisited++;//point to the next slot in the visited array
-                next++;// set the next element to the next index
-            } else {// if minEdge first element is not null
-                int dup = 0;// counting the number of duplicate
-                for (int i = next - 1; i >= 0; i--) {// looping throught the minEdge to compare with Temp
-                    if (minEdge[i].equalEdge(tempEdge[count])) {// if there is a duplicate
-                        dup++;// keep track that there is a duplicate
-                    } else {
-                        int sourceCounter = 0;// 0 if source has not been visited. 1 if source was visited
-                        int desCounter = 0;// 0 if destination has not been visited. 1 if destination was visited
-                        for (int j = 0; j < nextVisited; j++) {//loop through the visited array.
-                            //check if tempEdge source has been visited
-                            if (tempEdge[count].s.equals(visited[j])) {
-                                sourceCounter++;//increment if visited
-                            }
-                            //check if tempEdge destination has been visited
-                            if (tempEdge[count].d.equals(visited[j])) {
-                                desCounter++;//increment if visited
-                            }
-                        }
-                        //case 1 if both source and destination has not been visited
-                        if (sourceCounter == 0 && desCounter == 0) {
-                            caseVector = 1;
-                        }
-                        //case 2 if sources is visited but destination is not
-                        if (sourceCounter == 1 && desCounter == 0) {
-                            caseVector = 2;
-                        }
-                        //case 3 if destination is visited but source has not
-                        if (sourceCounter == 0 && desCounter == 1) {
-                            caseVector = 3;
-                        }
-                    }
-                }
-                if (dup == 0) {// if there is no duplicate, let minEdge index equal temp index
-                    //case 1 is going to run
-                    if (caseVector == 1) {
-                        minEdge[next] = tempEdge[count];// letting element of min and temp equal
-                        visited[nextVisited] = minEdge[next].s;//adding minEdge source to visited array
-                        nextVisited++;//point to the next visited array slot
-                        visited[nextVisited] = minEdge[next].d;//adding minEdge destination to the visited array
-                        nextVisited++;//point to the next visited array slot
-                        next++;// point to the next slot in min array to be fill in.
-                    }
-                    //case 2 will run
-                    if (caseVector == 2) {
-                        minEdge[next] = tempEdge[count];// letting element of min and temp equal
-                        visited[nextVisited] = minEdge[next].d;//adding the minEdge destination to the visited array
-                        nextVisited++;//point to the next slot in the visited array
-                        next++;// point to the next slot in min array to be fill in.
-                    }
-                    //case 3 will run
-                    if (caseVector == 3) {
-                        minEdge[next] = tempEdge[count];// letting element of min and temp equal
-                        visited[nextVisited] = minEdge[next].s;//adding the minEdge source to the visited array
-                        nextVisited++;//point to the next slot in the visited array
-                        next++;// point to the next slot in min array to be fill in.
-                    }
-                }
-                if (next == minEdge.length) {// if there is no more slot in minEdge, break
-                    break;// break out of the while loop
-                }
-            }
-            count++;// the next temp element to be compare with minEdge array
+
+        // ----------------------Kruskal's Algorithm re-implementation-----------------------
+        Queue<Edge> q = new LinkedList<>();//using queue to get the lowest cost weight and make its way to the last
+        for (int i = 0; i < tempEdge.length; i++) {//adding all sorted x array to the queue
+            q.add(tempEdge[i]);
         }
-        
-        System.out.println();
+
+        int index = 0;//index is going to the size of the edge array. also index point to where to add next edge
+        while (index < xArray.length - 1) {//loop until index is at the end of the edge array (E=V-1)
+            Edge e = q.remove();//get the first edge in the queue
+            
+            Vector a = find(e.s);//going to find the root parent vector of the source vector
+            Vector b = find(e.d);//going to find the root parent of the destination vector
+            if (!a.equals(b)){//if parent of a and b is not the same, it is going to add edge to the mini edge array
+                minEdge[index] = e;
+                index++;//increment the index. point to the next place to add next acyclic coordinate
+                merge(a, b);//combine the two vector
+            }
+        }
+        // -----------------------end re-implementation--------------------------------------
+
+        System.out.println();//spacing
         printEdge(minEdge);// printing the minEdge array. It is a void method
 
-        // getting the accumlative of all minEdge distance
+        //getting the accumlative of all minEdge distance
         for (int i = 0; i < minEdge.length; i++) {
-            result += minEdge[i].getValue();
+        result += minEdge[i].getValue();
         }
 
         return result;// return the total minimum ink spent
+    }
+
+    /**
+     * It is going to find the parent of the vector
+     * @param v Vector
+     * @return the parent of the vector
+     */
+    public Vector find(Vector v) {
+        if (!v.parent.equals(v)) {//it is going to loop untied it reaches its root parent
+            return find(v.parent);//recursion loop
+        }
+        return v;//return the root parent
+    }
+
+    /**
+     * going to merge the 2 vector. it is going to get the parent of vector a and let that be the new parent for b
+     * @param a Vector 1
+     * @param b Vector 2
+     */
+    public void merge(Vector a, Vector b) {
+        Vector parent_a = find(a);//find the parent for a
+        Vector parent_b = find(b);//find the parent for b
+        parent_b.parent = parent_a;//let a be the parent for b
     }
 
     /**

@@ -32,6 +32,7 @@ public class Graph {
  */
 class Vector{
     double x, y;//x coordinate and y coordinate
+    Vector parent;//parent vector is going to point to it parent
 
     /**
      * constructor for Vector class
@@ -39,6 +40,7 @@ class Vector{
     public Vector(){
         this.x = 0.0;//initialize x
         this.y = 0.0;//initialize y
+        this.parent = this;//initialize parent vector
     }
 
     /**
@@ -49,6 +51,23 @@ class Vector{
     public Vector (double x, double y){
         this.x = x;//initialize x
         this.y = y;//initialize y
+        this.parent = this;//initialize vector parent
+    }
+
+    /**
+     * set the parent vector. It is going to set it to point to its parent vector
+     * @param v Vector
+     */
+    public void setParent (Vector v){
+        this.parent = v;//set the parent vector
+    }
+
+    /**
+     * get the parent vector. Whatever it is pointing to, it is going to return
+     * @return return the vector that the current vector is pointing to
+     */
+    public Vector getParent(){
+        return parent;//return the parent vector
     }
 }
 

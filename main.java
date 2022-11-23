@@ -16,34 +16,35 @@ class main {
         // int numTest = 0; // number of test case
         Scanner input = new Scanner(System.in); // Scanner object that will handle the input of the user
         BufferedReader reader;
-        double[] xArray = { 1.0, 2.0, 2.0 };
-        double[] yArray = { 1.0, 2.0, 4.0 };
-        int counter = 0;
-        String s = "";
+        double[] xArray = { 1.0, 2.0, 2.0 };//Test case 1
+        double[] yArray = { 1.0, 2.0, 4.0 };//Test case 2
+        int counter = 0;//it is the index for the test_case.txt. It point to the character in each line
+        String s = "";//it is the char array. It is going to hold a character array or string in each line
 
         // test to see the end result
-        System.out.println("-----------------------Test 1-------------------------");
-        System.out.println();
+        System.out.println();//space in between the Test heading
+        System.out.println("-----------------------Test 1-------------------------");//heading for Test
+        //printing out the coordinate of the freckle
         for (int i = 0; i < xArray.length; i++) {
-            System.out.print(i + ". ");
-            System.out.printf("(%.2f, %.2f)\n", xArray[i], yArray[i]);
+            System.out.print(i + ". ");//numbering of the coordinate
+            System.out.printf("(%.2f, %.2f)\n", xArray[i], yArray[i]);//printing out the coordination of the freckle
         }
-        System.out.println("");
+        System.out.println("");//spacing formatting
 
         // ---------------------Prim's Algorithm----------------------------
-        System.out.println("-------------------------PRIM---------------------------");
+        System.out.println("-------------------------PRIM---------------------------");//printing out the heading for the Prim algorithm
         Prim prim = new Prim(); // create Prim object
         double p = prim.prim(xArray, yArray);// using the data from xArray and yArray to find the minimum ink spent
         System.out.printf("Prim = %.2f\n", p);// format the display
         System.out.println();// create space for formatting
 
         // ---------------------Kruskal's Algorithm----------------------------
-        System.out.println("-------------------------Kruskal---------------------------");
-        Kruskal krus = new Kruskal();
-        double k = krus.kruskal(xArray, yArray);
+        System.out.println("-------------------------Kruskal---------------------------");//printing out the heading for the Kruskal
+        Kruskal krus = new Kruskal();//creating an object for kruskal
+        double k = krus.kruskal(xArray, yArray);//adding data to the kruskal
         System.out.printf("Kruskal = %.2f\n", k);// format the display
 
-        System.out.println();
+        System.out.println();//spacing
         // ----------------------------------Input option--------------------------------
         // Random ran = new Random(); // random object that will generate random number
         // System.out.print("Please enter the number of test: "); // display a prompt
@@ -83,82 +84,79 @@ class main {
          * yArray[i] = y; // storing random y to y[index] array
          * }
          */
-        // ------------------------------------end of input
-        // option------------------------
+        // ------------------------------------end of input option------------------------
 
         // ----------------------------------File reader------------------------------
-        int testCaseCounter = 1;
-        try {
-            reader = new BufferedReader(new FileReader("test_case.txt"));
-            String line = reader.readLine();
-            testCaseCounter++;
-            while (line != null) {
-                s = line;
-                if (s.length() == 0) {
-                    System.out.println("-----------------------Test " + testCaseCounter+"-------------------------");
-                    System.out.println();
+        int testCaseCounter = 1;//counting the test case. for formating purposes
+        try {//try method, just in case there is something wrong in the text file
+            reader = new BufferedReader(new FileReader("test_case.txt"));//adding a reader for the file
+            String line = reader.readLine();//get the next line in the text_case.txt file
+            while (line != null) {//it will keep looping until there is nothing in the text file
+                s = line;//let String s hold the next line
+                if (s.length() == 0) {//if the length is 0, meaning that line is nothing
+                    testCaseCounter++;//increment the test case counter. for formatting purposes
+                    System.out.println();//skip line for formatting purposes
+                    System.out.println("-----------------------Test " + testCaseCounter + "-------------------------");//header for the test case
+                    //printing out the coordinate for the freckle
                     for (int i = 0; i < xArray.length; i++) {
                         System.out.print(i + ". ");
                         System.out.printf("(%.2f, %.2f)\n", xArray[i], yArray[i]);
                     }
-                    System.out.println("");
+                    System.out.println("");//space between
 
                     // ---------------------Prim's Algorithm----------------------------
-                    System.out.println("-------------------------PRIM---------------------------");
+                    System.out.println("-------------------------PRIM---------------------------");//header for the prim
                     prim = new Prim(); // create Prim object
                     p = prim.prim(xArray, yArray);// using the data from xArray and yArray to find the minimum ink spent
                     System.out.printf("Pim = %.2f\n", p);// format the display
                     System.out.println();// create space for formatting
 
                     // ---------------------Kruskal's Algorithm----------------------------
-                    System.out.println("-------------------------Kruskal---------------------------");
-                    krus = new Kruskal();
-                    k = krus.kruskal(xArray, yArray);
+                    System.out.println("-------------------------Kruskal---------------------------");//header for Kruskal
+                    krus = new Kruskal();//create an object for the Kruskal
+                    k = krus.kruskal(xArray, yArray);//adding data to the kruskal
                     System.out.printf("Kruskal = %.2f\n", k);// format the display
-                    line = reader.readLine();
+                    line = reader.readLine();//will try to read the next line
                 }
 
-                if (s.length() < 5) {
-                    s = line;
-                    int num = Integer.parseInt(s);
-                    xArray = new double[num];
-                    yArray = new double[num];
-                    counter = 0;
-                    line = reader.readLine();
+                if (s.length() < 5) {//If the string length is less than 5, mean that shows the number of coordinate
+                    s = line;//let the String s get the line of the next line in the text file
+                    int num = Integer.parseInt(s);//it is going to convert the string for the number of freckles into integer
+                    xArray = new double[num];//it is going to initialize the size of the next xArray
+                    yArray = new double[num];//it is going to initialize the size of the next yArray
+                    counter = 0;//reinitialize the counter to zero. counter is the index for each x and y array. 
+                                //reinitialize it mean new set of coordinate for test case
+                    line = reader.readLine();//it is going to the next line in the text file
                 }
 
-                if (s.length() >= 5) {
-                    double x = 0, y = 0;
-                    for (int i = 0; i < s.length(); i++) {
-                        char c = s.charAt(i);
-                        char space = ' ';
-                        if (c == space) {
-                            String xString = s.substring(0, i);
-                            String yString = s.substring(i + 1, s.length());
-                            x = Double.parseDouble(xString);
-                            y = Double.parseDouble(yString);
-                            xArray[counter] = x;
-                            yArray[counter] = y;
-                            counter++;
-                            line = reader.readLine();
-                            break;
+                if (s.length() >= 5) {//if the string length is greater than or equal to 5, mean that it is a coordinate
+                    double x = 0, y = 0;//reinitialize the x and y coordinate to 0
+                    for (int i = 0; i < s.length(); i++) {//for loop to traverse through the line, if the next char is space, it is going to stop
+                        char c = s.charAt(i);//next char in the string
+                        char space = ' ';//target on where to stop
+                        if (c == space) {//stop if next char is space
+                            String xString = s.substring(0, i);//anything before the space are the x coordinate
+                            String yString = s.substring(i + 1, s.length());//anything after the space, are the y coordinate
+                            x = Double.parseDouble(xString);//convert x string into double
+                            y = Double.parseDouble(yString);//convert y string into double
+                            xArray[counter] = x;//add the x coordinate to the xArray
+                            yArray[counter] = y;//add the y cooridanate to the yArray
+                            counter++;//increment the counter
+                            line = reader.readLine();//read the next line
+                            break;//break off from the for loop
                         }
                     }
                 }
 
             }
-            System.out.println();
-            for (int i = 0; i < xArray.length; i++) {
-                System.out.println(xArray[i] + ", " + yArray[i]);
-            }
-            reader.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+            reader.close();//close the read file
+        } catch (IOException e) {//if there is any error, throw a catch
+            e.printStackTrace();//print the stack trace for finding the error
         }
-
         // ----------------------------------End of File Reader-----------------------
 
         System.out.println();
+        System.out.println("-----------------------Test " + 12 + "-------------------------");//header for the last array
         // test to see the end result
         for (int i = 0; i < xArray.length; i++) {
             System.out.print(i + ". ");
@@ -167,19 +165,19 @@ class main {
         System.out.println("");
 
         // ---------------------Prim's Algorithm----------------------------
-        System.out.println("-------------------------PRIM---------------------------");
+        System.out.println("-------------------------PRIM---------------------------");//header for the prim
         prim = new Prim(); // create Prim object
         p = prim.prim(xArray, yArray);// using the data from xArray and yArray to find the minimum ink spent
         System.out.printf("Prim = %.2f\n", p);// format the display
         System.out.println();// create space for formatting
 
         // ---------------------Kruskal's Algorithm----------------------------
-        System.out.println("-------------------------Kruskal---------------------------");
-        krus = new Kruskal();
-        k = krus.kruskal(xArray, yArray);
+        System.out.println("-------------------------Kruskal---------------------------");//header for the kruskal
+        krus = new Kruskal();//create an object
+        k = krus.kruskal(xArray, yArray);//add data to kruskal
         System.out.printf("Kruskal = %.2f\n", k);// format the display
 
-        input.close();
+        input.close();//close scanner input
 
     }
 
